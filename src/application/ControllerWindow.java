@@ -25,16 +25,17 @@ public class ControllerWindow implements Initializable {
 	
 	public void addChoice() {
 		choiceBox.getItems().add("nivel experto");
+		buscamina = new Buscaminas(0);
 		
 	}
 	
 	public void charge(ActionEvent  a) {
 		GridPane gPane = new GridPane();
-		Button button = new Button();
 		if() {
 			for(int i =0; i<= Buscaminas.FILAS_PRINCIPIANTE; i++) {
 				for(int j = 0; j <= Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
-					
+					Button button = new Button(i+":"+j);
+					gPane.add(button, i, j);
 				}
 			}
 			
