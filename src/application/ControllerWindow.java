@@ -22,10 +22,26 @@ public class ControllerWindow implements Initializable {
 		addChoice();
 		
 	}
+	public void jugar(ActionEvent av) {
+		String a = choiceBox.getValue();
+		int result = 0;
+		if(a.compareTo("nivel experto")==0) {
+			result = Buscaminas.EXPERTO;
+		}
+		if(a.compareTo("nivel intermedio")==0) {
+			result = Buscaminas.INTERMEDIO;
+		}
+		if(a.compareTo("nivel principiante")==0) {
+			result = Buscaminas.PRINCIPIANTE;
+		}
+		buscamina = new Buscaminas(result);
+		
+	}
 	
 	public void addChoice() {
 		choiceBox.getItems().add("nivel experto");
-		buscamina = new Buscaminas(0);
+		choiceBox.getItems().add("nivel intermedio");
+		choiceBox.getItems().add("nivel principiante");
 		
 	}
 	
