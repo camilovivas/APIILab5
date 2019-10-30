@@ -19,6 +19,6 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <Button layoutX="274.0" layoutY="209.0" mnemonicParsing="false" onAction="#jugar" text="¡JUGAR!" />
+      <Button fx:id="bt" layoutX="274.0" layoutY="209.0" mnemonicParsing="false" onAction="#jugar" text="¡JUGAR!" />
    </children>
 </Pane>

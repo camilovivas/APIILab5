@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
@@ -24,6 +25,8 @@ public class ControllerWindow implements Initializable {
 		addChoice();
 		
 	}
+	
+	//cuando se unda el boton juagr
 	public void jugar(ActionEvent av) {
 		String a = choiceBox.getValue();
 		int result = 0;
@@ -37,7 +40,7 @@ public class ControllerWindow implements Initializable {
 			result = Buscaminas.PRINCIPIANTE;
 		}
 		buscamina = new Buscaminas(result);
-		bt.setOnAction(e->{charge();});		
+		bt.setOnAction(e->{charge();});
 		
 	}
 	
@@ -49,9 +52,9 @@ public class ControllerWindow implements Initializable {
 	}
 	
 	public void charge() {
-		Pane p = new Pane();
+		Pane root = new Pane();
 		GridPane gPane = new GridPane();
-		p.getChildren().add(gPane);
+		root.getChildren().add(gPane);
 		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
 			for(int i =0; i<= Buscaminas.FILAS_PRINCIPIANTE; i++) {
 				for(int j = 0; j <= Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
@@ -60,8 +63,10 @@ public class ControllerWindow implements Initializable {
 					gPane.add(button, i, j);
 				}
 			}
-			
 		}
+		Scene sc = new Scene(root);
+		
+		
 		
 	}
 

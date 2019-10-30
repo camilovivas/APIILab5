@@ -417,46 +417,6 @@ public class Buscaminas {
 	}
 
 	/**
-	 * Metodo que se encarga de convertir el tablero a un String para poder verlo en pantalla
-	 * @return String - El tablero en formato String
-	 */
-	public String mostrarTablero() {
-		// TODO
-		String casilla = " ";
-		for(int h = 0; h<casillas[0].length; h++) {
-			if(nivel == EXPERTO || nivel == INTERMEDIO) {
-				if((h+1)>9) {
-					casilla +=" "+(h+1);
-				}
-				else {
-					casilla +=" "+(h+1)+" ";
-				}
-			}
-			
-			else {
-				casilla +=" "+(h+1);
-			}
-		}
-		casilla += "\n"+1;
-		for(int i = 0; i<casillas.length; i ++) {
-			for(int j = 0; j<casillas[0].length;j++) {
-				if(nivel == EXPERTO || nivel == INTERMEDIO) {
-					casilla += " "+casillas[i][j].mostrarValorCasilla()+" ";
-				}
-				else {
-					casilla += " "+casillas[i][j].mostrarValorCasilla();
-				}
-				if(j == casillas[0].length-1 && i<casillas.length-1) {
-					casilla += "\n"+(i+2);
-				}
-			}
-		}
-
-		return casilla; 
-	}
-
-
-	/**
 	 * Metodo que se encarga de marcar todas las casillas como destapadas
 	 */
 	public void resolver() {
