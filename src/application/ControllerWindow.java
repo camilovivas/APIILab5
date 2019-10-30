@@ -41,7 +41,8 @@ public class ControllerWindow implements Initializable {
 			result = Buscaminas.PRINCIPIANTE;
 		}
 		buscamina = new Buscaminas(result);//presenta error en esta linea
-		bt.setOnAction(e->{charge(av);});//como le paso el stage?
+		//bt.setOnAction(e->{charge(av);});//como le paso el stage?
+		charge(av);
 		
 	}
 	
