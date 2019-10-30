@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import modelo.Buscaminas;
 
 public class ControllerWindow implements Initializable {
@@ -39,8 +40,8 @@ public class ControllerWindow implements Initializable {
 		if(a.compareTo("nivel principiante")==0) {
 			result = Buscaminas.PRINCIPIANTE;
 		}
-		buscamina = new Buscaminas(result);
-		bt.setOnAction(e->{charge();});
+		buscamina = new Buscaminas(result);//presenta error en esta linea
+		bt.setOnAction(e->{charge(av);});//como le paso el stage?
 		
 	}
 	
@@ -51,7 +52,8 @@ public class ControllerWindow implements Initializable {
 		
 	}
 	
-	public void charge() {
+	public void charge(ActionEvent av) {
+		Stage stage = new Stage();
 		Pane root = new Pane();
 		GridPane gPane = new GridPane();
 		root.getChildren().add(gPane);
@@ -65,6 +67,8 @@ public class ControllerWindow implements Initializable {
 			}
 		}
 		Scene sc = new Scene(root);
+		stage.setScene(sc);
+		stage.show();
 		
 		
 		
