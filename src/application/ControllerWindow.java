@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import modelo.Buscaminas;
 
 public class ControllerWindow implements Initializable {
@@ -15,10 +16,11 @@ public class ControllerWindow implements Initializable {
 	private Buscaminas buscamina;
 	@FXML
 	private ChoiceBox<String> choiceBox;
-
+	@FXML
+	private Button bt;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
 		addChoice();
 		
 	}
@@ -35,6 +37,7 @@ public class ControllerWindow implements Initializable {
 			result = Buscaminas.PRINCIPIANTE;
 		}
 		buscamina = new Buscaminas(result);
+		bt.setOnAction(e->{charge();});		
 		
 	}
 	
@@ -45,23 +48,21 @@ public class ControllerWindow implements Initializable {
 		
 	}
 	
-	public void charge(ActionEvent  a) {
+	public void charge() {
+		Pane p = new Pane();
 		GridPane gPane = new GridPane();
-		if() {
+		p.getChildren().add(gPane);
+		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
 			for(int i =0; i<= Buscaminas.FILAS_PRINCIPIANTE; i++) {
 				for(int j = 0; j <= Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
-					Button button = new Button(i+":"+j);
+					Button button = new Button();
+					button.setId(i+":"+j);
 					gPane.add(button, i, j);
 				}
 			}
 			
 		}
-		if() {
-			
-		}
-		if() {
-			
-		}
+		
 	}
 
 }

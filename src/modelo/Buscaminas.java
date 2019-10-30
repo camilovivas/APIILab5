@@ -154,6 +154,9 @@ public class Buscaminas {
 		 throw new ExceptionNumeroNivelElegido("por favor ingrese un numero del 1 al 3");	
 		}
 	}
+	public int darNivel() {
+		return nivel;
+	}
 	
 
 	/**
