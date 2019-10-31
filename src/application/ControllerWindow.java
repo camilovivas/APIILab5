@@ -3,6 +3,9 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.management.relation.Relation;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,12 +76,20 @@ public class ControllerWindow implements Initializable {
 			for(int i =0; i<= Buscaminas.FILAS_PRINCIPIANTE; i++) {
 				for(int j = 0; j <= Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
 					Button button = new Button();
+					button.setId(i+":"+j);
 					button.setOnAction(e->{
-						if( buscamina.abrirCasilla(0, 0)== false) {
+						String a = button.getId();
+						String [] sp = a.split(":");
+						int n1 = Integer.parseInt(sp[0]);
+						int n2 = Integer.parseInt(sp[1]); 
+						if( buscamina.abrirCasilla(n1, n2)== false) {
 							lost(s1, stage);
 						}
+						else {
+							button.setText(buscamina.cantidadMinasAlrededor(n1, n2)+"");
+							
+						}
 					});
-					button.setId(i+":"+j);
 					gPane.add(button, i, j);
 				}
 			}

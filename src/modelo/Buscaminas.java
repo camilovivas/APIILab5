@@ -138,7 +138,7 @@ public class Buscaminas {
 		if(nivel == PRINCIPIANTE) {
 			casillas = new Casilla [FILAS_PRINCIPIANTE] [COLUMNAS_PRINCIPIANTE];
 			cantidadMinas = CANTIDAD_MINAS_PRINCIPANTE;
-//			cargar();
+			cargar();
 		}
 		if(nivel ==  INTERMEDIO) {
 			casillas = new Casilla [FILAS_INTERMEDIO] [COLUMNAS_INTERMEDIO];
