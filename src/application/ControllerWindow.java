@@ -1,9 +1,11 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -40,10 +42,15 @@ public class ControllerWindow implements Initializable {
 		if(a.compareTo("nivel principiante")==0) {
 			result = Buscaminas.PRINCIPIANTE;
 		}
-		buscamina = new Buscaminas(result);//presenta error en esta linea
-		//bt.setOnAction(e->{charge(av);});//como le paso el stage?
-		charge(av);
-		
+		buscamina = new Buscaminas(result);
+		FXMLLoader root1;
+		try {
+			root1 = FXMLLoader.load(getClass().getResource("/application/window.fxml"));
+			Main d = root1.getController();
+			charge(av, d);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public void addChoice() {
@@ -53,8 +60,7 @@ public class ControllerWindow implements Initializable {
 		
 	}
 	
-	public void charge(ActionEvent av) {
-		Stage stage = new Stage();
+	public void charge(ActionEvent av, Stage stage) {
 		Pane root = new Pane();
 		GridPane gPane = new GridPane();
 		root.getChildren().add(gPane);
