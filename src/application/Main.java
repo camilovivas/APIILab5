@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Main extends Application {
@@ -23,6 +24,7 @@ public class Main extends Application {
 			VBox p = new VBox(3);
 			Scene scn = new Scene(p);
 			Text tx = new Text("ingrese el nivel de dificultad");
+			tx.setFont(new Font(20));
 		
 			ChoiceBox<String> cb = new ChoiceBox<>();
 			cb.setId("choiceBox");

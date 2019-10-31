@@ -115,13 +115,8 @@ public class Buscaminas {
 	public Buscaminas(int nivel) {
 		this.nivel = nivel;
 		perdio = false;
-		try {
-			inicializarPartida();
-		} catch (ExceptionNumeroNivelElegido e) {
-			System.out.println(e.getMessage());
-			
-		}
-	
+		inicializarPartida(nivel);
+		generarMinas();
 	}
 
 
@@ -132,13 +127,14 @@ public class Buscaminas {
 	/**
 	 * Se encarga de inicializar los atributos y relaciones de la clase buscaminas a partir del nivel elegido por el usuario
 	 */
-	private void inicializarPartida() throws ExceptionNumeroNivelElegido {
+	private void inicializarPartida(int nivel) {
 
 		// TODO
 		if(nivel == PRINCIPIANTE) {
 			casillas = new Casilla [FILAS_PRINCIPIANTE] [COLUMNAS_PRINCIPIANTE];
 			cantidadMinas = CANTIDAD_MINAS_PRINCIPANTE;
-			cargar();
+			inicializarCasillasLibres();
+			
 		}
 		if(nivel ==  INTERMEDIO) {
 			casillas = new Casilla [FILAS_INTERMEDIO] [COLUMNAS_INTERMEDIO];
@@ -148,10 +144,6 @@ public class Buscaminas {
 			casillas = new Casilla [FILAS_EXPERTO] [COLUMNAS_EXPERTO] ;
 			cantidadMinas = CANTIDAD_MINAS_EXPERTO;
 			
-		}
-		
-		if(nivel < 1 || nivel > 3) {
-		 throw new ExceptionNumeroNivelElegido("por favor ingrese un numero del 1 al 3");	
 		}
 	}
 	public int darNivel() {
