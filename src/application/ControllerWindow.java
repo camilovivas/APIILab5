@@ -25,12 +25,22 @@ public class ControllerWindow implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		addChoice();
+//		addChoice();
 		
 	}
 	
+	
+	public ChoiceBox<String> getChoiceBox() {
+		return choiceBox;
+	}
+
+	public void setChoiceBox(ChoiceBox<String> choiceBox) {
+		this.choiceBox = choiceBox;
+	}
+
+
 	//cuando se unda el boton juagr
-	public void jugar(ActionEvent av) {
+	public void jugar(Stage s) {
 		String a = choiceBox.getValue();
 		int result = 0;
 		if(a.compareTo("nivel experto")==0) {
@@ -43,14 +53,8 @@ public class ControllerWindow implements Initializable {
 			result = Buscaminas.PRINCIPIANTE;
 		}
 		buscamina = new Buscaminas(result);
-		FXMLLoader root1;
-		try {
-			root1 = FXMLLoader.load(getClass().getResource("/application/window.fxml"));
-			Main d = root1.getController();
-			charge(av, d);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+		charge(s);
+
 	}
 	
 	public void addChoice() {
@@ -60,7 +64,7 @@ public class ControllerWindow implements Initializable {
 		
 	}
 	
-	public void charge(ActionEvent av, Stage stage) {
+	public void charge(Stage stage) {
 		Pane root = new Pane();
 		GridPane gPane = new GridPane();
 		root.getChildren().add(gPane);
@@ -76,9 +80,6 @@ public class ControllerWindow implements Initializable {
 		Scene sc = new Scene(root);
 		stage.setScene(sc);
 		stage.show();
-		
-		
-		
 	}
 
 }
