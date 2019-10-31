@@ -21,6 +21,7 @@ public class Main extends Application {
 		try {
 //			Parent root = FXMLLoader.load(getClass().getResource("/application/window.fxml"));
 			VBox p = new VBox(3);
+			Scene scn = new Scene(p);
 			Text tx = new Text("ingrese el nivel de dificultad");
 		
 			ChoiceBox<String> cb = new ChoiceBox<>();
@@ -31,10 +32,9 @@ public class Main extends Application {
 			
 			Button bt = new Button();
 			bt.setText("¡¡A JUGAR!!");
-			bt.setOnAction(e->{relation.jugar(primaryStage);});
+			bt.setOnAction(e->{relation.jugar(primaryStage, scn);});
 			
 			p.getChildren().addAll(tx, cb, bt);
-			Scene scn = new Scene(p);
 			primaryStage.setScene(scn);
 			primaryStage.show();
 		} catch(Exception e) {

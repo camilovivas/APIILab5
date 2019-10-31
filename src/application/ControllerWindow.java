@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modelo.Buscaminas;
@@ -40,7 +41,7 @@ public class ControllerWindow implements Initializable {
 
 
 	//cuando se unda el boton juagr
-	public void jugar(Stage s) {
+	public void jugar(Stage s, Scene s1) {
 		String a = choiceBox.getValue();
 		int result = 0;
 		if(a.compareTo("nivel experto")==0) {
@@ -53,7 +54,7 @@ public class ControllerWindow implements Initializable {
 			result = Buscaminas.PRINCIPIANTE;
 		}
 		buscamina = new Buscaminas(result);
-		charge(s);
+		charge(s, s1);
 
 	}
 	
@@ -64,7 +65,7 @@ public class ControllerWindow implements Initializable {
 		
 	}
 	
-	public void charge(Stage stage) {
+	public void charge(Stage stage, Scene s1) {
 		Pane root = new Pane();
 		GridPane gPane = new GridPane();
 		root.getChildren().add(gPane);
@@ -72,6 +73,11 @@ public class ControllerWindow implements Initializable {
 			for(int i =0; i<= Buscaminas.FILAS_PRINCIPIANTE; i++) {
 				for(int j = 0; j <= Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
 					Button button = new Button();
+					button.setOnAction(e->{
+						if( buscamina.abrirCasilla(0, 0)== false) {
+							lost(s1, stage);
+						}
+					});
 					button.setId(i+":"+j);
 					gPane.add(button, i, j);
 				}
@@ -80,6 +86,32 @@ public class ControllerWindow implements Initializable {
 		Scene sc = new Scene(root);
 		stage.setScene(sc);
 		stage.show();
+	}
+	
+	public void lost(Scene s1, Stage s2) {
+		Stage st = new Stage();
+		
+		HBox root = new HBox();
+		
+		
+		Button btt = new Button();
+		btt.setText("jugar otra vez");
+		btt.setOnAction(e->{
+			s2.setScene(s1);
+			s2.show();
+
+		});
+		
+		Button btt2 = new Button();
+		btt2.setText("salir");
+		btt2.setOnAction(e->{
+			
+		});
+		
+		root.getChildren().addAll(btt, btt2);
+		Scene s = new Scene(root); 
+		st.setScene(s);
+		st.show();
 	}
 
 }
