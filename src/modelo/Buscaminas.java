@@ -117,6 +117,7 @@ public class Buscaminas {
 		perdio = false;
 		inicializarPartida(nivel);
 		generarMinas();
+		inicializarCasillasLibres();
 	}
 
 
@@ -133,7 +134,6 @@ public class Buscaminas {
 		if(nivel == PRINCIPIANTE) {
 			casillas = new Casilla [FILAS_PRINCIPIANTE] [COLUMNAS_PRINCIPIANTE];
 			cantidadMinas = CANTIDAD_MINAS_PRINCIPANTE;
-			inicializarCasillasLibres();
 			
 		}
 		if(nivel ==  INTERMEDIO) {
@@ -163,6 +163,29 @@ public class Buscaminas {
 			}
 		}		
 	}
+	public void generarMinas() {
+		
+		Random i = new Random();
+		Random j = new Random();
+		int filas = casillas.length;
+		int columnas = casillas[0].length;
+		boolean listo = false;
+		int contador = 0;
+		while(!listo) {
+			if(casillas[i.nextInt(filas)][j.nextInt(columnas)] == null) {
+				casillas[i.nextInt(filas)][j.nextInt(columnas)] = new Casilla(Casilla.MINA);
+				contador++;
+			}
+			else if(casillas[i.nextInt(filas)][j.nextInt(columnas)] != null){
+				casillas[i.nextInt(filas)][j.nextInt(columnas)] = new Casilla(Casilla.MINA);
+				contador--;
+			}
+			if(contador == cantidadMinas) {
+				listo = true;
+			}
+		}
+	}
+	
 	public void cargar() {
 		for (int i = 0; i < casillas.length; i++) {
 			for (int j = 0; j < casillas[0].length; j++) {
@@ -385,28 +408,6 @@ public class Buscaminas {
 	/**
 	 * Método que se encarga de generar aleatoriomente las minas
 	 */
-	public void generarMinas() {
-		
-		Random i = new Random();
-		Random j = new Random();
-		int filas = casillas.length;
-		int columnas = casillas[0].length;
-		boolean listo = false;
-		int contador = 0;
-			while(!listo) {
-				if(casillas[i.nextInt(filas)][j.nextInt(columnas)] == null) {
-						casillas[i.nextInt(filas)][j.nextInt(columnas)] = new Casilla(Casilla.MINA);
-						contador++;
-				}
-				else if(casillas[i.nextInt(filas)][j.nextInt(columnas)] != null){
-					casillas[i.nextInt(filas)][j.nextInt(columnas)] = new Casilla(Casilla.MINA);
-					contador--;
-				}
-			if(contador == cantidadMinas) {
-					listo = true;
-			}
-		}
-	}
 
 	/**
 	 * Metodo que se encarga de marcar todas las casillas como destapadas
