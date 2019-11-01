@@ -209,10 +209,6 @@ public class Buscaminas {
 		int contador = 0;
 		int inicioFila = reguladorF-1;
 		int inicioColumna = reguladorC-1;
-//			if(i>casillas.length || j>casillas[0].length) {
-//				throw new ExceptionPosicionElegida("el numeor ingresado no concuerda");
-//			}
-//			else {
 			if(i == 1 ) {// si esta en en la primera fila
 				if(j < casillas[0].length && j > 1) {//si esta en la mitad
 					contador = recorridoCentroSuperior(reguladorC);
