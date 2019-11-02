@@ -86,35 +86,59 @@ public class ControllerWindow implements Initializable {
 		hb.getChildren().addAll(bt2, bt3);
 		
 		root.getChildren().addAll(gPane, hb);
-		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
-			for(int i =0; i< Buscaminas.FILAS_PRINCIPIANTE; i++) {
-				for(int j = 0; j < Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
-					Button button = new Button();
-					button.setId(i+":"+j);
-					button.setOnAction(e->{
-						String a = button.getId();
-						String [] sp = a.split(":");
-						int n1 = Integer.parseInt(sp[0]);
-						int n2 = Integer.parseInt(sp[1]); 
-						if( buscamina.abrirCasilla(n1, n2)== false) {
-							lost(s1, stage);
-							button.setText("*");
-						}
-						else {
-							button.setText(buscamina.cantidadMinasAlrededor(n1, n2)+"");
-							
-						}
-					});
-					gPane.add(button, i, j);
-				}
+		int fila = limitFila();
+		int columna = limitColum();
+		for(int i =0; i< fila; i++) {
+			for(int j = 0; j < columna; j++) {
+				Button button = new Button();
+				button.setId(i+":"+j);
+				button.setOnAction(e->{
+					String a = button.getId();
+					String [] sp = a.split(":");
+					int n1 = Integer.parseInt(sp[0]);
+					int n2 = Integer.parseInt(sp[1]); 
+					if( buscamina.abrirCasilla(n1, n2)== false) {
+						lost(s1, stage);
+						button.setText("*");
+					}
+					else {
+						button.setText(buscamina.cantidadMinasAlrededor(n1, n2)+"");						
+					}
+				});
+				gPane.add(button, i, j);
 			}
 		}
 		Scene sc = new Scene(root, 300,300);
 		stage.setScene(sc);
 		stage.show();
 	}
+	public int limitFila() {
+		int retorno = 0;
+		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
+			retorno = Buscaminas.FILAS_PRINCIPIANTE;
+		}
+		else if(buscamina.darNivel() == Buscaminas.INTERMEDIO) {
+			retorno = Buscaminas.FILAS_INTERMEDIO;
+		}
+		else if(buscamina.darNivel() == Buscaminas.EXPERTO) {
+			retorno = Buscaminas.FILAS_EXPERTO;
+		}
+		return retorno;
+	}
 	
-	
+	public int limitColum() {
+		int retorno = 0;
+		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
+			retorno = Buscaminas.COLUMNAS_PRINCIPIANTE;
+		}
+		else if(buscamina.darNivel() == Buscaminas.INTERMEDIO) {
+			retorno = Buscaminas.COLUMNAS_INTERMEDIO;
+		}
+		else if(buscamina.darNivel() == Buscaminas.EXPERTO) {
+			retorno = Buscaminas.COLUMNAS_EXPERTO;
+		}
+		return retorno;
+	}
 	
 	public void lost(Scene s1, Stage s2) {
 		Stage st = new Stage();
