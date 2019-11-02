@@ -129,8 +129,6 @@ public class Buscaminas {
 	 * Se encarga de inicializar los atributos y relaciones de la clase buscaminas a partir del nivel elegido por el usuario
 	 */
 	private void inicializarPartida(int nivel) {
-
-		// TODO
 		if(nivel == PRINCIPIANTE) {
 			casillas = new Casilla [FILAS_PRINCIPIANTE] [COLUMNAS_PRINCIPIANTE];
 			cantidadMinas = CANTIDAD_MINAS_PRINCIPANTE;
@@ -159,43 +157,45 @@ public class Buscaminas {
 			for(int j = 0; j<casillas[0].length;j++) {
 				if(casillas[i][j] == null) {
 					casillas[i][j] = new Casilla(Casilla.LIBRE);
+					casillas[i][j].modificarValor(cantidadMinasAlrededor(i+1, j+1));
 				}
 			}
 		}		
 	}
 	public void generarMinas() {
-		
-		Random i = new Random();
-		Random j = new Random();
-		int filas = casillas.length;
-		int columnas = casillas[0].length;
-		boolean listo = false;
-		int contador = 0;
-		while(!listo) {
-			if(casillas[i.nextInt(filas)][j.nextInt(columnas)] == null) {
-				casillas[i.nextInt(filas)][j.nextInt(columnas)] = new Casilla(Casilla.MINA);
-				contador++;
+		if(nivel == PRINCIPIANTE) {
+			for(int i = 0; i < cantidadMinas;) {
+				int fila = (int)(Math.random()*8);
+				int columna = (int)(Math.random()*8);
+				if(casillas[fila][columna] == null) {
+					casillas[fila][columna] = new Casilla(Casilla.MINA);
+					i++;
+				}
 			}
-			else if(casillas[i.nextInt(filas)][j.nextInt(columnas)] != null){
-				casillas[i.nextInt(filas)][j.nextInt(columnas)] = new Casilla(Casilla.MINA);
-				contador--;
+		}
+		else if(nivel == INTERMEDIO) {
+			for(int i = 0; i < cantidadMinas;) {
+				int fila = (int)(Math.random()*16);
+				int columna = (int)(Math.random()*16);
+				if(casillas[fila][columna] == null) {
+					casillas[fila][columna] = new Casilla(Casilla.MINA);
+					i++;
+				}
 			}
-			if(contador == cantidadMinas) {
-				listo = true;
+		}
+		else if(nivel == EXPERTO) {
+			for(int i = 0; i < cantidadMinas;) {
+				int fila = (int)(Math.random()*16);
+				int columna = (int)(Math.random()*30);
+				if(casillas[fila][columna] == null) {
+					casillas[fila][columna] = new Casilla(Casilla.MINA);
+					i++;
+				}
 			}
 		}
 	}
 	
-	public void cargar() {
-		for (int i = 0; i < casillas.length; i++) {
-			for (int j = 0; j < casillas[0].length; j++) {
-				if(casillas[i][j].darValor() != 0) {
-					casillas[i][j].modificarValor(cantidadMinasAlrededor(i+1, j+1));
-				}
-			}
-		}
-		
-	}
+	
 
 	/**
 	 * Metodo que permite contar la cantidad de minas que tiene alrededor una casillas
@@ -203,45 +203,134 @@ public class Buscaminas {
 	 * @param j - la columna de la matriz
 	 * @return int - La cantidad de minas que tiene alrededor la casilla [i][j]
 	 */
-	public int cantidadMinasAlrededor(int i, int j) {//throws ExceptionPosicionElegida 
-		int reguladorC = j-1;
-		int reguladorF = i-1;
-		int contador = 0;
-		int inicioFila = reguladorF-1;
-		int inicioColumna = reguladorC-1;
-			if(i == 1 ) {// si esta en en la primera fila
-				if(j < casillas[0].length && j > 1) {//si esta en la mitad
-					contador = recorridoCentroSuperior(reguladorC);
-				}
-				else if(j == casillas[0].length) {//esquina superior derecha
-					contador = recorridoEsquinaDerechaSuperior();
-				}
-				else {//si esta en la esquina izquierda
-					contador = recorridoEsquinaIzqSuperior();
-				}
+	public int cantidadMinasAlrededor(int i, int j) {
+		int cantidadMinasAlrededor = 0;
+		try {
+			if(casillas[i-1][j-1].esMina()) {
+				cantidadMinasAlrededor++;
 			}
-			else if(i == casillas.length) {//si esta en la ultima fila
-				if((j-1) == 0) {// si esta en el rincon izquierdo
-					contador = recorridoEsquinaIzqInferior();
-				}
-				else if(j < casillas[0].length && j>0) {// si esta en la mitad
-				contador = recorridoCentroInferior(reguladorC);
-				}
-				else {
-					contador = recorridoDerInferior();
-				}	
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i-1][j].esMina()) {
+				cantidadMinasAlrededor++;
 			}
-			else if(j == 1 && (i>1 && i<casillas.length)) {
-				contador = recorridoLateralIzq(reguladorF);
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i-1][j+1].esMina()) {
+				cantidadMinasAlrededor++;
 			}
-			else if(j == casillas[0].length && (i>1 && i<casillas.length)) {
-				contador = recorridoLateralDer(reguladorF);
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i][j+1].esMina()) {
+				cantidadMinasAlrededor++;
 			}
-			else {
-				contador = recorridoGeneral(reguladorF, reguladorC);
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i+1][j+1].esMina()) {
+				cantidadMinasAlrededor++;
 			}
-//		}
-		return contador;
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i+1][j].esMina()) {
+				cantidadMinasAlrededor++;
+			}
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i+1][j-1].esMina()) {
+				cantidadMinasAlrededor++;
+			}
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		try {
+			if(casillas[i][j-1].esMina()) {
+				cantidadMinasAlrededor++;
+			}
+		}
+		catch(IndexOutOfBoundsException e) {
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		return cantidadMinasAlrededor;
+//		int reguladorC = j-1;
+//		int reguladorF = i-1;
+//		int contador = 0;
+//		int inicioFila = reguladorF-1;
+//		int inicioColumna = reguladorC-1;
+//			if(i == 1 ) {// si esta en en la primera fila
+//				if(j < casillas[0].length && j > 1) {//si esta en la mitad
+//					contador = recorridoCentroSuperior(reguladorC);
+//				}
+//				else if(j == casillas[0].length) {//esquina superior derecha
+//					contador = recorridoEsquinaDerechaSuperior();
+//				}
+//				else {//si esta en la esquina izquierda
+//					contador = recorridoEsquinaIzqSuperior();
+//				}
+//			}
+//			else if(i == casillas.length) {//si esta en la ultima fila
+//				if((j-1) == 0) {// si esta en el rincon izquierdo
+//					contador = recorridoEsquinaIzqInferior();
+//				}
+//				else if(j < casillas[0].length && j>0) {// si esta en la mitad
+//				contador = recorridoCentroInferior(reguladorC);
+//				}
+//				else {
+//					contador = recorridoDerInferior();
+//				}	
+//			}
+//			else if(j == 1 && (i>1 && i<casillas.length)) {
+//				contador = recorridoLateralIzq(reguladorF);
+//			}
+//			else if(j == casillas[0].length && (i>1 && i<casillas.length)) {
+//				contador = recorridoLateralDer(reguladorF);
+//			}
+//			else {
+//				contador = recorridoGeneral(reguladorF, reguladorC);
+//			}
+//		return contador;
 	}
 	
 	

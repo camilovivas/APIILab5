@@ -20,9 +20,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-//			Parent root = FXMLLoader.load(getClass().getResource("/application/window.fxml"));
 			VBox p = new VBox(3);
-			Scene scn = new Scene(p);
+			Scene scn = new Scene(p, 300,300);
 			Text tx = new Text("ingrese el nivel de dificultad");
 			tx.setFont(new Font(20));
 		
@@ -30,13 +29,13 @@ public class Main extends Application {
 			cb.setId("choiceBox");
 			relation.setChoiceBox(cb);
 			relation.addChoice();
-			
-			
+		
 			Button bt = new Button();
 			bt.setText("¡¡A JUGAR!!");
 			bt.setOnAction(e->{relation.jugar(primaryStage, scn);});
 			
 			p.getChildren().addAll(tx, cb, bt);
+			primaryStage.setTitle("Buscaminas Game");
 			primaryStage.setScene(scn);
 			primaryStage.show();
 		} catch(Exception e) {

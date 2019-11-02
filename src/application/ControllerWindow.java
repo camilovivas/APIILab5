@@ -16,6 +16,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modelo.Buscaminas;
 
@@ -69,12 +71,24 @@ public class ControllerWindow implements Initializable {
 	}
 	
 	public void charge(Stage stage, Scene s1) {
-		Pane root = new Pane();
+		VBox root = new VBox(2);
+		
 		GridPane gPane = new GridPane();
-		root.getChildren().add(gPane);
+		
+		HBox hb = new HBox();
+		
+		Button bt2 = new Button();
+		bt2.setText("Dar pista");
+
+		Button bt3 = new Button();
+		bt3.setText("Resolver");
+		
+		hb.getChildren().addAll(bt2, bt3);
+		
+		root.getChildren().addAll(gPane, hb);
 		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
-			for(int i =0; i<= Buscaminas.FILAS_PRINCIPIANTE; i++) {
-				for(int j = 0; j <= Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
+			for(int i =0; i< Buscaminas.FILAS_PRINCIPIANTE; i++) {
+				for(int j = 0; j < Buscaminas.COLUMNAS_PRINCIPIANTE; j++) {
 					Button button = new Button();
 					button.setId(i+":"+j);
 					button.setOnAction(e->{
@@ -84,6 +98,7 @@ public class ControllerWindow implements Initializable {
 						int n2 = Integer.parseInt(sp[1]); 
 						if( buscamina.abrirCasilla(n1, n2)== false) {
 							lost(s1, stage);
+							button.setText("*");
 						}
 						else {
 							button.setText(buscamina.cantidadMinasAlrededor(n1, n2)+"");
@@ -94,14 +109,17 @@ public class ControllerWindow implements Initializable {
 				}
 			}
 		}
-		Scene sc = new Scene(root);
+		Scene sc = new Scene(root, 300,300);
 		stage.setScene(sc);
 		stage.show();
 	}
 	
+	
+	
 	public void lost(Scene s1, Stage s2) {
 		Stage st = new Stage();
-		
+		VBox vb = new VBox(2); 
+		Text tx = new Text("¡¡PINCHASTE UNA MINA!!");
 		HBox root = new HBox();
 		
 		
@@ -120,7 +138,8 @@ public class ControllerWindow implements Initializable {
 		});
 		
 		root.getChildren().addAll(btt, btt2);
-		Scene s = new Scene(root); 
+		vb.getChildren().addAll(tx, root);
+		Scene s = new Scene(vb, 100,150); 
 		st.setScene(s);
 		st.show();
 	}
