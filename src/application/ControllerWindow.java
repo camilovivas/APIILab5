@@ -105,10 +105,10 @@ public class ControllerWindow implements Initializable {
 						button.setText(buscamina.cantidadMinasAlrededor(n1, n2)+"");						
 					}
 				});
-				gPane.add(button, i, j);
+				gPane.add(button, j, i);
 			}
 		}
-		Scene sc = new Scene(root, 300,300);
+		Scene sc = new Scene(root, 500,450);
 		stage.setScene(sc);
 		stage.show();
 	}
