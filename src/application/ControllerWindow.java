@@ -7,12 +7,17 @@ import java.util.ResourceBundle;
 import javax.management.relation.Relation;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -92,7 +97,16 @@ public class ControllerWindow implements Initializable {
 			for(int j = 0; j < columna; j++) {
 				Button button = new Button();
 				button.setId(i+":"+j);
+				button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				
+					@Override
+					public void handle(MouseEvent event) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 				button.setOnAction(e->{
+			
 					String a = button.getId();
 					String [] sp = a.split(":");
 					int n1 = Integer.parseInt(sp[0]);
@@ -145,6 +159,7 @@ public class ControllerWindow implements Initializable {
 		VBox vb = new VBox(2); 
 		Text tx = new Text("¡¡PINCHASTE UNA MINA!!");
 		HBox root = new HBox();
+		Scene s = new Scene(vb, 100,150); 
 		
 		
 		Button btt = new Button();
@@ -158,12 +173,12 @@ public class ControllerWindow implements Initializable {
 		Button btt2 = new Button();
 		btt2.setText("salir");
 		btt2.setOnAction(e->{
-			
+			s2.close();
+			st.close();
 		});
 		
 		root.getChildren().addAll(btt, btt2);
 		vb.getChildren().addAll(tx, root);
-		Scene s = new Scene(vb, 100,150); 
 		st.setScene(s);
 		st.show();
 	}
