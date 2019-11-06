@@ -548,7 +548,6 @@ public class Buscaminas {
 	 * @return boolean - true si gano el juego, false en caso contrario
 	 */
 	public boolean gano() {
-		// TODO
 		boolean gano = false;
 		int contador = 0;
 		int c = (casillas.length * casillas[0].length) - cantidadMinas;

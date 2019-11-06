@@ -116,7 +116,7 @@ public class ControllerWindow implements Initializable {
 		String[] spl = cordenada.split(",");
 		int n1 = Integer.parseInt(spl[0]);
 		int n2 = Integer.parseInt(spl[1]); 
-		Button b = (Button) getNodeFromGridPane(gr, n1, n2);
+		Button b = (Button) getNodeFromGridPane(gr, n2, n1);
 		b.setText(buscamina.darCasillas()[n1][n2].mostrarValorCasilla());
 		b.setDisable(true);
 	}
@@ -143,7 +143,38 @@ public class ControllerWindow implements Initializable {
 		else {
 			button.setText(buscamina.darCasillas()[n1][n2].mostrarValorCasilla());	
 			button.setDisable(true);
+			if(buscamina.gano() == true) {
+				gano(s1, stage);
+			}
 		}
+	}
+	
+	public void gano(Scene s1, Stage s2) {
+		Stage st = new Stage();
+		VBox vb = new VBox(2); 
+		Text tx = new Text("¡¡GANASTE!!");
+		HBox root = new HBox();
+		Scene s = new Scene(vb, 180,100); 
+		
+		s2.close();
+		Button btt = new Button();
+		btt.setText("jugar otra vez");
+		btt.setOnAction(e->{
+			s2.setScene(s1);
+			st.close();
+			s2.show();
+
+		});
+		
+		Button btt2 = new Button();
+		btt2.setText("salir");
+		btt2.setOnAction(e->{
+			st.close();
+		});
+		root.getChildren().addAll(btt, btt2);
+		vb.getChildren().addAll(tx, root);
+		st.setScene(s);
+		st.show();
 	}
 	
 	
@@ -210,7 +241,7 @@ public class ControllerWindow implements Initializable {
 		VBox vb = new VBox(4); 
 		Text tx = new Text("¡¡PINCHASTE UNA MINA!!");
 		HBox root = new HBox();
-		Scene s = new Scene(vb, 180,100); 
+		Scene s = new Scene(vb, 780, 500); 
 		
 		s2.close();
 		Button btt = new Button();

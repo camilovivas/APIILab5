@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Main extends Application {
-	private ControllerWindow relation = new  ControllerWindow();
+	ControllerWindow relation = new  ControllerWindow();
 	@Override
 	public void start(Stage primaryStage) {
 		try {
