@@ -162,6 +162,11 @@ public class Buscaminas {
 			}
 		}		
 	}
+	
+
+	/**
+	 * Método que se encarga de generar aleatoriomente las minas
+	 */
 	public void generarMinas() {
 		if(nivel == PRINCIPIANTE) {
 			for(int i = 0; i < cantidadMinas;) {
@@ -294,6 +299,8 @@ public class Buscaminas {
 			
 		}
 		return cantidadMinasAlrededor;
+		
+		
 //		int reguladorC = j-1;
 //		int reguladorF = i-1;
 //		int contador = 0;
@@ -490,20 +497,16 @@ public class Buscaminas {
 		return contador;
 	}
 	
-	/**
-	 * Método que se encarga de generar aleatoriomente las minas
-	 */
 
 	/**
 	 * Metodo que se encarga de marcar todas las casillas como destapadas
 	 */
 	public void resolver() {
-
 		for(int i = 0; i<casillas.length; i++) {
 			for(int j = 0; j<casillas[0].length; j ++) {
 				if(casillas[i][j].darSeleccionada() == false) {
 					casillas[i][j].destapar();
-//					casillas[i][j].modificarValor(cantidadMinasAlrededor(i, j));
+					casillas[i][j].modificarValor(cantidadMinasAlrededor(i, j));
 				}		
 			}
 		}

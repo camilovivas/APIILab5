@@ -76,8 +76,8 @@ public class ControllerWindow implements Initializable {
 	}
 	
 	public void charge(Stage stage, Scene s1) {
-		VBox root = new VBox(2);
-		
+		VBox root = new VBox(3);
+		Text title = new Text("Presione click derecho para marcar como mina");
 		GridPane gPane = new GridPane();
 		
 		HBox hb = new HBox();
@@ -90,7 +90,7 @@ public class ControllerWindow implements Initializable {
 		
 		hb.getChildren().addAll(bt2, bt3);
 		
-		root.getChildren().addAll(gPane, hb);
+		root.getChildren().addAll(title, gPane, hb);
 		int fila = limitFila();
 		int columna = limitColum();
 		for(int i =0; i< fila; i++) {
@@ -98,25 +98,15 @@ public class ControllerWindow implements Initializable {
 				Button button = new Button();
 				button.setId(i+":"+j);
 				button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				
 					@Override
 					public void handle(MouseEvent event) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-				button.setOnAction(e->{
-			
-					String a = button.getId();
-					String [] sp = a.split(":");
-					int n1 = Integer.parseInt(sp[0]);
-					int n2 = Integer.parseInt(sp[1]); 
-					if( buscamina.abrirCasilla(n1, n2)== false) {
-						lost(s1, stage);
-						button.setText("*");
-					}
-					else {
-						button.setText(buscamina.cantidadMinasAlrededor(n1, n2)+"");						
+						MouseButton mb = event.getButton();
+						if(mb == MouseButton.PRIMARY) {
+							destapar(button, s1, stage);
+						}
+						if(mb == MouseButton.SECONDARY) {
+							button.setText("?");
+						}
 					}
 				});
 				gPane.add(button, j, i);
@@ -126,6 +116,23 @@ public class ControllerWindow implements Initializable {
 		stage.setScene(sc);
 		stage.show();
 	}
+	
+	public void destapar(Button button, Scene s1, Stage stage) {
+		String a = button.getId();
+		String [] sp = a.split(":");
+		int n1 = Integer.parseInt(sp[0]);
+		int n2 = Integer.parseInt(sp[1]); 
+		if( buscamina.abrirCasilla(n1, n2)== false) {
+			lost(s1, stage);
+			button.setText("*");
+		}
+		else {
+			button.setText(buscamina.darCasillas()[n1][n2].mostrarValorCasilla());	
+			button.setDisable(true);
+		}
+	}
+	
+	
 	public int limitFila() {
 		int retorno = 0;
 		if(buscamina.darNivel() == Buscaminas.PRINCIPIANTE) {
@@ -156,16 +163,17 @@ public class ControllerWindow implements Initializable {
 	
 	public void lost(Scene s1, Stage s2) {
 		Stage st = new Stage();
-		VBox vb = new VBox(2); 
+		VBox vb = new VBox(4); 
 		Text tx = new Text("¡¡PINCHASTE UNA MINA!!");
 		HBox root = new HBox();
-		Scene s = new Scene(vb, 100,150); 
+		Scene s = new Scene(vb, 180,100); 
 		
-		
+		s2.close();
 		Button btt = new Button();
 		btt.setText("jugar otra vez");
 		btt.setOnAction(e->{
 			s2.setScene(s1);
+			st.close();
 			s2.show();
 
 		});
@@ -173,14 +181,30 @@ public class ControllerWindow implements Initializable {
 		Button btt2 = new Button();
 		btt2.setText("salir");
 		btt2.setOnAction(e->{
-			s2.close();
 			st.close();
 		});
-		
+		Text ts = new Text("SOLUCION");
+		GridPane g = solucion();
 		root.getChildren().addAll(btt, btt2);
-		vb.getChildren().addAll(tx, root);
+		vb.getChildren().addAll(tx, ts, g, root);
 		st.setScene(s);
 		st.show();
+	}
+	
+	public GridPane solucion() {
+		buscamina.resolver();
+		GridPane g = new GridPane();
+		int fila = limitFila();
+		int columna = limitColum();
+		for(int i =0; i< fila; i++) {
+			for(int j = 0; j < columna; j++) {
+				Button bs = new Button();
+				bs.setText(buscamina.darCasillas()[i][j].mostrarValorCasilla());
+				bs.setDisable(true);
+				g.add(bs, j, i);
+			}
+		}
+		return g;
 	}
 
 }
