@@ -26,65 +26,6 @@ class testBuscarminas {
 		assertEquals(Buscaminas.CANTIDAD_MINAS_PRINCIPANTE,contador);
 	}
 	
-	@Test
-	public void recorridoEsquinaDerechaSuperior() {
-		Buscaminas b = new Buscaminas(Buscaminas.PRINCIPIANTE);
-		b.darCasillas()[0][6] = new Casilla(Casilla.MINA);
-		b.darCasillas()[1][6] = new Casilla(Casilla.MINA);
-		b.darCasillas()[1][7] = new Casilla(Casilla.MINA);
-		b.inicializarCasillasLibres();
-		int minas = b.recorridoEsquinaDerechaSuperior();
-		assertEquals(3, minas);
-	}
-	
-	@Test
-	public void recorridoSuperior() {
-		Buscaminas d = new Buscaminas(Buscaminas.PRINCIPIANTE);
-		d.darCasillas()[1][3] = new Casilla(Casilla.MINA);
-		d.inicializarCasillasLibres();
-		int minas = d.recorridoCentroSuperior(3);
-		assertEquals(1, minas);
-		
-	}
-	
-	@Test
-	public void recorridoCentroInferior() {
-		Buscaminas e = new Buscaminas(Buscaminas.PRINCIPIANTE);
-		e.darCasillas()[6][6]= new Casilla(Casilla.MINA);
-		e.inicializarCasillasLibres();
-		int minas = e.recorridoCentroInferior(6);
-		assertEquals(1, minas);
-
-	
-	}
-	
-	@Test
-	public void recorridoGeneral() {
-		Buscaminas f = new Buscaminas(Buscaminas.PRINCIPIANTE);
-		f.darCasillas()[2][4] = new Casilla(Casilla.MINA);
-		f.darCasillas()[2][2] = new Casilla(Casilla.MINA);
-		f.inicializarCasillasLibres();
-		int minas = f.recorridoGeneral(2, 3);
-		assertEquals(2, minas);
-	}
-	
-	@Test
-	public void recorridoDerInferior() {
-		Buscaminas g = new Buscaminas(Buscaminas.PRINCIPIANTE);
-		g.darCasillas()[6][7]= new Casilla(Casilla.MINA);
-		g.inicializarCasillasLibres();
-		int r = g.recorridoDerInferior();
-		assertEquals(1,r);
-	}
-	
-	@Test
-	public void recorridoLatterald() {
-		Buscaminas h = new Buscaminas(Buscaminas.PRINCIPIANTE);	
-		h.darCasillas()[1][6] = new Casilla(Casilla.MINA);
-		h.inicializarCasillasLibres();
-		int d = h.recorridoLateralDer(2);
-		assertEquals(1,d);
-	}
 	
 	@Test
 	public void mostrarCantidadMinas () {
