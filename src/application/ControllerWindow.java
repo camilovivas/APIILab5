@@ -1,26 +1,18 @@
 package application;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.management.relation.Relation;
-
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -36,7 +28,6 @@ public class ControllerWindow implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//		addChoice();
 		
 	}
 	
@@ -79,14 +70,18 @@ public class ControllerWindow implements Initializable {
 		VBox root = new VBox(3);
 		Text title = new Text("Presione click derecho para marcar como mina");
 		GridPane gPane = new GridPane();
-		
 		HBox hb = new HBox();
 		
 		Button bt2 = new Button();
 		bt2.setText("Dar pista");
-
+		bt2.setOnAction(e->{
+			darPista(gPane);
+		});
 		Button bt3 = new Button();
 		bt3.setText("Resolver");
+		bt3.setOnAction(e->{
+			solucion2(s1, stage);
+		});
 		
 		hb.getChildren().addAll(bt2, bt3);
 		
@@ -115,6 +110,25 @@ public class ControllerWindow implements Initializable {
 		Scene sc = new Scene(root, 500,450);
 		stage.setScene(sc);
 		stage.show();
+	}
+	public void darPista(GridPane gr) {
+		String cordenada = buscamina.darPista();
+		String[] spl = cordenada.split(",");
+		int n1 = Integer.parseInt(spl[0]);
+		int n2 = Integer.parseInt(spl[1]); 
+		Button b = (Button) getNodeFromGridPane(gr, n1, n2);
+		b.setText(buscamina.darCasillas()[n1][n2].mostrarValorCasilla());
+		b.setDisable(true);
+	}
+	
+	public Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
+		Node re = null;
+	    for (Node node : gridPane.getChildren()) {
+	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+	            re = node;
+	        }
+	    }
+	    return re;
 	}
 	
 	public void destapar(Button button, Scene s1, Stage stage) {
@@ -159,6 +173,36 @@ public class ControllerWindow implements Initializable {
 			retorno = Buscaminas.COLUMNAS_EXPERTO;
 		}
 		return retorno;
+	}
+	
+	public void solucion2(Scene s1, Stage s2) {
+		Stage st = new Stage();
+		VBox vb = new VBox(3); 
+		HBox root = new HBox();
+		Scene s = new Scene(vb, 180,100); 
+		
+		s2.close();
+		Button btt = new Button();
+		btt.setText("jugar otra vez");
+		btt.setOnAction(e->{
+			s2.setScene(s1);
+			st.close();
+			s2.show();
+
+		});
+		
+		Button btt2 = new Button();
+		btt2.setText("salir");
+		btt2.setOnAction(e->{
+			st.close();
+		});
+		Text ts = new Text("SOLUCION");
+		GridPane g = solucion();
+		root.getChildren().addAll(btt, btt2);
+		vb.getChildren().addAll(ts, g, root);
+		st.setScene(s);
+		st.show();
+
 	}
 	
 	public void lost(Scene s1, Stage s2) {

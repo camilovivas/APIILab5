@@ -573,17 +573,17 @@ public class Buscaminas {
 	 * @return String, Mensaje de la Casilla que marco abierta, En caso de no haber casillas posibles para dar una pista, retorna el mensaje no hay pistas para dar
 	 */
 	public String darPista() {
-		String msj = " ";
-		for (int i = 0; i < casillas.length; i++) {
-			for (int j = 0; j < casillas[0].length; j++) {
-				
+		String msj = "";
+		boolean fin = false;
+		for (int i = 0; i < casillas.length && !fin; i++) {
+			for (int j = 0; j < casillas[0].length && !fin; j++) {		
 				if(casillas[i][j].esMina() == false && casillas[i][j].darValor() > 0) {
 					casillas[i][j].destapar();
-					msj += "se abrio la casilla"+i+1+j+1;
+					msj += i+","+j;
+					fin = true;
 				}
 			}
 		}
-		
 		return  msj;
 	}
 	
